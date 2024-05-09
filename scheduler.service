@@ -1,0 +1,12 @@
+[Unit]
+Description=Scheduler
+After=syslog.target network.target
+[Service]
+User=root
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/cuda/bin"
+Environment="com_camenduru_mongodb_uri=mongodb://127.0.0.1:27017/web?waitQueueMultiple=1000"
+WorkingDirectory=/content/com.camenduru/scheduler
+ExecStart=/bin/bash -c 'java -jar target/scheduler-0.0.1.jar --spring.profiles.active=prod'
+Restart=always
+[Install]
+WantedBy=multi-user.target

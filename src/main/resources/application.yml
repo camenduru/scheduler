@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: ${com_camenduru_mongodb_uri}
+
+camenduru:
+  scheduler.cron1: ${com_camenduru_scheduler_cron1}
