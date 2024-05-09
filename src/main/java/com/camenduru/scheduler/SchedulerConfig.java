@@ -1,5 +1,6 @@
 package com.camenduru.scheduler;
 
+import java.util.Date;
 import java.util.concurrent.Executor;
 
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import com.camenduru.scheduler.domain.enumeration.JobStatus;
 import com.camenduru.scheduler.repository.JobRepository;
 
 @Configuration
@@ -38,13 +40,19 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(getAsyncExecutor());
-
         taskRegistrar.addCronTask(new Runnable() {
             @Override
             public void run() {
                 try {
-                    int size = jobRepository.findAll().size();
+                    Date twelveHoursAgo = new Date(System.currentTimeMillis() - (12 * 60 * 60 * 1000));
+                    int size = jobRepository.findAllNonExpiredJobsOlderThan12Hours(twelveHoursAgo).size();
                     System.out.println("addCronTask() | " + size);
+                    jobRepository.findAllNonExpiredJobsOlderThan12Hours(twelveHoursAgo)
+                                .forEach(job -> {
+                                    System.out.println("Expired | " + job.getId());
+                                    job.setStatus(JobStatus.EXPIRED);
+                                    jobRepository.save(job);
+                                });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
