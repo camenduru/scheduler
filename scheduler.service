@@ -7,7 +7,7 @@ Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/
 Environment="com_camenduru_mongodb_uri=mongodb://127.0.0.1:27017/web?waitQueueMultiple=1000"
 Environment="com_camenduru_scheduler_cron1=0 0 0/12 * * ?"
 WorkingDirectory=/content/com.camenduru/scheduler
-ExecStart=/bin/bash -c 'java -jar target/scheduler-0.0.1.jar'
+ExecStart=/bin/bash -c 'java -Dserver.port=3002 -jar target/scheduler-0.0.1.jar'
 Restart=always
 [Install]
 WantedBy=multi-user.target
