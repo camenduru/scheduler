@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -60,6 +61,18 @@ public class Job implements Serializable {
     @NotNull
     @Field("login")
     private String login;
+
+    @DBRef
+    @Field("discord")
+    private Detail discord;
+
+    @DBRef
+    @Field("total")
+    private Detail total;
+
+    @DBRef
+    @Field("user")
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -204,6 +217,45 @@ public class Job implements Serializable {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public Detail getDiscord() {
+        return this.discord;
+    }
+
+    public void setDiscord(Detail detail) {
+        this.discord = detail;
+    }
+
+    public Job discord(Detail detail) {
+        this.setDiscord(detail);
+        return this;
+    }
+
+    public Detail getTotal() {
+        return this.total;
+    }
+
+    public void setTotal(Detail detail) {
+        this.total = detail;
+    }
+
+    public Job total(Detail detail) {
+        this.setTotal(detail);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Job user(User user) {
+        this.setUser(user);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
