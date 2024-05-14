@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import com.camenduru.scheduler.domain.enumeration.JobStatus;
+import com.camenduru.scheduler.repository.DetailRepository;
 import com.camenduru.scheduler.repository.JobRepository;
 
 @Configuration
@@ -27,6 +28,9 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
 
     @Autowired
     private JobRepository jobRepository;
+
+    @Autowired
+    private DetailRepository detailRepository;
     
     @Override
     public Executor getAsyncExecutor() {
@@ -48,11 +52,15 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
                     int size = jobRepository.findAllNonExpiredJobsOlderThan12Hours(twelveHoursAgo).size();
                     System.out.println("addCronTask() | " + size);
                     jobRepository.findAllNonExpiredJobsOlderThan12Hours(twelveHoursAgo)
-                                .forEach(job -> {
-                                    System.out.println("Expired | " + job.getId());
-                                    job.setStatus(JobStatus.EXPIRED);
-                                    jobRepository.save(job);
-                                });
+                        .forEach(job -> {
+                            job.setStatus(JobStatus.EXPIRED);
+                            jobRepository.save(job);
+                        });
+                    detailRepository.findAll()
+                        .forEach(detail -> {
+                            detail.setTotal("100");
+                            detailRepository.save(detail);
+                        });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
