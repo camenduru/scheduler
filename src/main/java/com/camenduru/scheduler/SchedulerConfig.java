@@ -26,6 +26,9 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
     @Value("${camenduru.scheduler.cron1}")
     private String cron1;
 
+    @Value("${camenduru.scheduler.cron2}")
+    private String cron2;
+
     @Autowired
     private JobRepository jobRepository;
 
@@ -54,6 +57,15 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
                             job.setStatus(JobStatus.EXPIRED);
                             jobRepository.save(job);
                         });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, cron1);
+        taskRegistrar.addCronTask(new Runnable() {
+            @Override
+            public void run() {
+                try {
                     detailRepository.findAllByMembershipIsFree()
                         .forEach(detail -> {
                             detail.setTotal("100");
@@ -61,14 +73,14 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
                         });
                     detailRepository.findAllByMembershipIsPaid()
                         .forEach(detail -> {
-                            detail.setTotal("1000");
+                            detail.setTotal("1100");
                             detailRepository.save(detail);
                         });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }, cron1);
+        }, cron2);
     }
 
 }
