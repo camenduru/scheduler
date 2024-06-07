@@ -54,9 +54,14 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
                             job.setStatus(JobStatus.EXPIRED);
                             jobRepository.save(job);
                         });
-                    detailRepository.findAll()
+                    detailRepository.findAllByMembershipIsFree()
                         .forEach(detail -> {
                             detail.setTotal("100");
+                            detailRepository.save(detail);
+                        });
+                    detailRepository.findAllByMembershipIsPaid()
+                        .forEach(detail -> {
+                            detail.setTotal("1000");
                             detailRepository.save(detail);
                         });
                 } catch (Exception e) {
