@@ -73,7 +73,7 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
                         });
                     detailRepository.findAllByMembershipIsPaid()
                         .forEach(detail -> {
-                            detail.setTotal("5100");
+                            detail.setTotal("1100");
                             detailRepository.save(detail);
                         });
                 } catch (Exception e) {
