@@ -22,6 +22,12 @@ import com.camenduru.scheduler.repository.JobRepository;
 @EnableAsync
 @EnableScheduling
 public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
+
+    @Value("${camenduru.scheduler.default.free.total}")
+    private String defaultFreeTotal;
+
+    @Value("${camenduru.scheduler.default.paid.total}")
+    private String defaultPaidTotal;
     
     @Value("${camenduru.scheduler.cron1}")
     private String cron1;
@@ -68,12 +74,12 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
                 try {
                     detailRepository.findAllByMembershipIsFree()
                         .forEach(detail -> {
-                            detail.setTotal("100");
+                            detail.setTotal(defaultFreeTotal);
                             detailRepository.save(detail);
                         });
                     detailRepository.findAllByMembershipIsPaid()
                         .forEach(detail -> {
-                            detail.setTotal("1100");
+                            detail.setTotal(defaultPaidTotal);
                             detailRepository.save(detail);
                         });
                 } catch (Exception e) {
