@@ -35,7 +35,7 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
     @Value("${camenduru.scheduler.cron2}")
     private String cron2;
 
-    @Value("${camenduru.scheduler.cron2}")
+    @Value("${camenduru.scheduler.cron3}")
     private String cron3;
 
     @Autowired
