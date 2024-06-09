@@ -9,6 +9,7 @@ Environment="com_camenduru_scheduler_default_free_total=0"
 Environment="com_camenduru_scheduler_default_paid_total=0"
 Environment="com_camenduru_scheduler_cron1=0 0 0/12 * * ?"
 Environment="com_camenduru_scheduler_cron2=0 0 0 * * ?"
+Environment="com_camenduru_scheduler_cron3=0 0/10 * * * ?"
 WorkingDirectory=/content/com.camenduru/scheduler
 ExecStart=/bin/bash -c 'java -Dserver.port=3002 -jar target/scheduler-0.0.1.jar'
 Restart=always

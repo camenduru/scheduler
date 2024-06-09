@@ -8,3 +8,4 @@ camenduru:
   scheduler.default.paid.total: ${com_camenduru_scheduler_default_paid_total}
   scheduler.cron1: ${com_camenduru_scheduler_cron1}
   scheduler.cron2: ${com_camenduru_scheduler_cron2}
+  scheduler.cron3: ${com_camenduru_scheduler_cron3}
