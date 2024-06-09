@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface JobRepository extends MongoRepository<Job, String> {
-    @Query("{status: {$ne: 'EXPIRED'}, date: {$lt: ?0}}")
-    List<Job> findAllNonExpiredJobsOlderThan12Hours(Date twelveHoursAgo);
+    @Query("{status: {$ne: 'EXPIRED'}, date: {$lt: ?0}, login: {$ne: 'home'}}")
+    List<Job> findAllNonExpiredJobsOlderThanTheDate(Date date);
 }
